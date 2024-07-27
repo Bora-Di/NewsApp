@@ -60,6 +60,9 @@ img {
     text-transform: capitalize;
     color: #fff;
 }
+.option:hover{
+    background-color: rgba(194, 109, 109, 0.397);
+}
 
 .option.active {
     background-color: #ebebeb;
