@@ -5,31 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NewsApp</title>
     <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <div class="heading-container">
-        <h4> News Website</h4>
-    </div>
-    <div class="options-container"></div>
+    <header class="header">
+        <div class="heading-container">
+            <h4>News Website</h4>
+        </div>
+        <i class='bx bx-menu' id="menu_icon"></i>
+        <nav class="navbar">
+            <button class="option active" onclick="selectCategory(event, 'general')">General</button>
+            <button class="option" onclick="selectCategory(event, 'entertainment')">Entertainment</button>
+            <button class="option" onclick="selectCategory(event, 'health')">Health</button>
+            <button class="option" onclick="selectCategory(event, 'science')">Science</button>
+            <button class="option" onclick="selectCategory(event, 'sports')">Sports</button>
+            <button class="option" onclick="selectCategory(event, 'technology')">Technology</button>
+        </nav>
+    </header>
     <div class="container"></div>
 
-    <script src="script.js"></script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewsApp</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="heading-container">
-        <h4> News Website</h4>
-    </div>
-    <div class="options-container"></div>
-    <div class="container"></div>
-
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
 </body>
 </html>

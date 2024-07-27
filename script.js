@@ -1,77 +1,86 @@
-const container = document.querySelector(".container");
-const optionsContainer = document.querySelector(".options-container");
+// Add click event listener for menu icon to toggle the navbar visibility
+document.getElementById('menu_icon').addEventListener('click', function() {
+    const navbar = document.querySelector('.navbar');
+    navbar.classList.toggle('active');
+});
 
-const api_Key = "e3f7a7d4279144f9b0d0cfd4dae9483b";
-const country = "ma";
-const options = [
-    "general", 
-    "entertainment", 
-    "health", 
-    "science", 
-    "sports",
-    "technology",
-];
+function selectCategory(event, category) {
+    const container = document.querySelector(".container");
+    const optionsContainer = document.querySelector(".options-container");
 
-let requestUrl;
+    const apiKey = "e3f7a7d4279144f9b0d0cfd4dae9483b";
+    const country = "ma";
+    const options = [
+        "general", 
+        "entertainment", 
+        "health", 
+        "science", 
+        "sports",
+        "technology",
+    ];
 
-const generateUI = (articles) => {
-    for (let item of articles) {
-        let card = document.createElement("div");
-        card.classList.add("news-card");
-        card.innerHTML = `
-        <div class="news-image-container">
-          <img src="${item.urlToImage || "./newspaper.jpg"}" alt=""/>
-        </div>
-        <div class="news-content">
-          <div class="news-title">
-            ${item.title}
-          </div>
-          <div class="news-description">
-            ${item.description || item.content || ""}
-          </div>
-          <a href="${item.url}" target="_blank" class="view-button">Read more</a>
-        </div>`;
-        container.appendChild(card);
-    }
-};
+    let requestUrl;
 
-const getNews = async () => {
-    container.innerHTML = "";
-    let response = await fetch(requestUrl);
-    if (!response.ok) {
-        alert("Data unavailable at the moment. Please try later.");
-        return false;
-    }
-    let data = await response.json();
-    generateUI(data.articles);
-};
+    const generateUI = (articles) => {
+        for (let item of articles) {
+            let card = document.createElement("div");
+            card.classList.add("news-card");
+            card.innerHTML = `
+            <div class="news-image-container">
+              <img src="${item.urlToImage || "./newspaper.jpg"}" alt=""/>
+            </div>
+            <div class="news-content">
+              <div class="news-title">
+                ${item.title}
+              </div>
+              <div class="news-description">
+                ${item.description || item.content || ""}
+              </div>
+              <a href="${item.url}" target="_blank" class="view-button">Read more</a>
+            </div>`;
+            container.appendChild(card);
+        }
+    };
 
-const selectCategory = (e, category) => {
-    let options = document.querySelectorAll(".option");
-    options.forEach((element) => {
-        element.classList.remove("active");
-    });
-    requestUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${api_Key}`;
-    e.target.classList.add("active");
-    getNews();
-};
+    const getNews = async () => {
+        container.innerHTML = "";
+        let response = await fetch(requestUrl);
+        if (!response.ok) {
+            alert("Data unavailable at the moment. Please try later.");
+            return false;
+        }
+        let data = await response.json();
+        generateUI(data.articles);
+    };
 
-const createOptions = () => {
-    for (let i of options) {
-        optionsContainer.innerHTML += `
-        <button class="option ${
-        i === "general" ? "active" : ""}"
-        onclick="selectCategory(event, '${i}')">${i}</button>`;
-    }
-};
+    // Update the selectCategory function to handle category selection
+    const selectCategory = (e, category) => {
+        let options = document.querySelectorAll(".option");
+        options.forEach((element) => {
+            element.classList.remove("active");
+        });
+        requestUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
+        e.target.classList.add("active");
+        getNews();
+    };
 
-const init = () => {
-    optionsContainer.innerHTML = "";
-    createOptions();
-    getNews();
-};
+    const createOptions = () => {
+        for (let i of options) {
+            optionsContainer.innerHTML += `
+            <button class="option ${
+            i === "general" ? "active" : ""}"
+            onclick="selectCategory(event, '${i}')">${i}</button>`;
+        }
+    };
 
-window.onload = () => {
-    requestUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
-    init();
-};
+    const init = () => {
+        optionsContainer.innerHTML = "";
+        createOptions();
+        getNews();
+    };
+
+    window.onload = () => {
+        requestUrl = `https://newsapi.org/v2/top-headlines?country=${country}&category=general&apiKey=${apiKey}`;
+        init();
+    };
+}
